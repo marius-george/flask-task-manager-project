@@ -1,6 +1,7 @@
 import os
 from flask import Flask, render_template
 from pymongo import MongoClient
+from werkzeug.security import generate_password_hash, check_password_hash
 
 if os.path.exists("env.py"):
     import env
@@ -20,6 +21,11 @@ def get_tasks():
     tasks = db.tasks.find()
 
     return render_template("tasks.html", tasks=tasks)
+
+
+@app.route("/register", methods=["GET", "POST"])
+def register():
+    return render_template("register.html")
 
 
 if __name__ == "__main__":
